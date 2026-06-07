@@ -32,6 +32,7 @@ This repository includes runnable .NET samples under `src/Agent-Harness`.
      - Azure CLI
      - An Azure AI Foundry project endpoint
      - A deployed LLM model in that project (the samples expect a deployment named `gpt-5.4`, but you can use any model - just update the environment variable accordingly)
+     - Docker or Podman (for running the Aspire Dashboard, which is optional but recommended for observability)
 2. Set environment variables:
 
     ```powershell

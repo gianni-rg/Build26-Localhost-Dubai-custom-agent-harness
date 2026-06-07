@@ -2,7 +2,7 @@
 
 This sample demonstrates a HarnessAgent with **all features enabled**, plus:
 
-- **Hyperlight CodeAct** — sandboxed Python code execution via `execute_code` (requires KVM)
+- **Hyperlight CodeAct** — sandboxed Python code execution via `execute_code` (requires Hyper-V or KVM)
 - **Skills** — file-based skill discovery (a `regex-tester` skill is included)
 
 The agent can plan tasks, manage modes, store memories, read/write files, search the web, approve sensitive operations, discover and use skills, and execute arbitrary Python code — all pre-configured by the HarnessAgent.
@@ -22,7 +22,7 @@ The agent can plan tasks, manage modes, store memories, read/write files, search
 
 ## Running
 
-Launch Podman, first
+Launch Aspire Dashboard (for observability), first:
 
 ```powershell
 podman run --rm -it `
