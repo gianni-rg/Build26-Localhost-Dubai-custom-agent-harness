@@ -1,4 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
+﻿// Copyright (c) 2026 Gianni Rosa Gallina.
+// Copyright (c) Microsoft.
 
 // This sample demonstrates a HarnessAgent with ALL features enabled, plus:
 // - Hyperlight CodeAct (HyperlightCodeActProvider) for sandboxed Python code execution
@@ -33,9 +34,16 @@ var deploymentName = Environment.GetEnvironmentVariable("AZURE_AI_MODEL_DEPLOYME
 const int MaxContextWindowTokens = 1_050_000;
 const int MaxOutputTokens = 128_000;
 const string TracingSourceName = "Harness.CodeExecution";
+var otlpEndpoint =
+    Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT") ??
+    Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_TRACES_ENDPOINT") ??
+    "http://localhost:4317";
 
-// Set up OpenTelemetry tracing that writes spans to a text file.
-using var tracerProvider = HarnessTracing.CreateFileTracerProvider(TracingSourceName);
+// Set up OpenTelemetry tracing that writes spans to a text file AND exports to OTLP endpoint.
+// The OTLP exporter sends traces to your OpenTelemetry collector (e.g., otelme in VSCode).
+using var tracerProvider = HarnessTracing.CreateFileTracerProvider(
+    TracingSourceName,
+    otlpEndpoint: otlpEndpoint);
 
 // Create the HyperlightCodeActProvider with the Python/Wasm backend.
 // The guest module path is resolved automatically from the Hyperlight.HyperlightSandbox.Guest.Python NuGet package.

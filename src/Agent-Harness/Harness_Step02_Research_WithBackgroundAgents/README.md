@@ -8,7 +8,7 @@ A parent agent receives a list of stock tickers and uses a web-search background
 
 ### Architecture
 
-```
+```text
 ┌────────────────────────────────────────┐
 │     StockPriceResearcher               │
 │         (Parent Agent)                 │
@@ -46,7 +46,7 @@ dotnet run
 
 When prompted, enter a list of stock tickers such as:
 
-```
+```text
 BAC, MSFT, BA
 ```
 

@@ -3,6 +3,8 @@ name: regex-tester
 description: Validate, test, and debug regular expressions by executing them against sample inputs. Use when asked to build, verify, or explain a regex pattern.
 ---
 
+# Regex Tester
+
 ## Usage
 
 When the user asks you to create, validate, or debug a regular expression:

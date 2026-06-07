@@ -11,16 +11,25 @@ The agent can plan tasks, manage modes, store memories, read/write files, search
 
 - .NET 10 SDK
 - An Azure AI Foundry project endpoint
-- KVM-capable host (the Hyperlight sandbox runs code in micro-VMs)
+- KVM-capable host (the Hyperlight sandbox runs code in micro-VMs) or Windows 11 (Pro/Enterprise) with Hyper-V enabled (Hyperlight can use Hyper-V)
 
 ## Environment Variables
 
-| Variable | Description |
-|----------|-------------|
-| `AZURE_AI_PROJECT_ENDPOINT` | Your Azure AI Foundry project endpoint |
-| `AZURE_AI_MODEL_DEPLOYMENT_NAME` | Model deployment name (default: `gpt-5.4`) |
+| Variable                          | Description                                  |
+|-----------------------------------|----------------------------------------------|
+| `AZURE_AI_PROJECT_ENDPOINT`       | Your Azure AI Foundry project endpoint       |
+| `AZURE_AI_MODEL_DEPLOYMENT_NAME`  | Model deployment name (default: `gpt-5.4`)   |
 
 ## Running
+
+Launch Podman, first
+
+```powershell
+podman run --rm -it `
+  -p 18888:18888 `
+  -p 4317:18889 `
+  mcr.microsoft.com/dotnet/aspire-dashboard:latest
+```
 
 ```bash
 dotnet run
@@ -38,14 +47,14 @@ The `skills/regex-tester/` skill instructs the agent to validate regex patterns 
 
 ## Features Enabled
 
-| Feature | Description |
-|---------|-------------|
-| TodoProvider | Task planning and tracking (`/todos` command) |
-| AgentModeProvider | Mode switching (`/mode` command) |
-| FileMemoryProvider | Persistent memory stored as files |
-| FileAccessProvider | Read/write files in a working directory |
-| ToolApproval | Don't-ask-again approval for sensitive tools |
-| WebSearch | Built-in hosted web search |
-| AgentSkillsProvider | Discovers and uses skills from the `skills/` folder |
-| HyperlightCodeActProvider | Sandboxed Python execution via `execute_code` |
-| OpenTelemetry | Trace logging to a text file |
+| Feature                   | Description                                               |
+|---------------------------|-----------------------------------------------------------|
+| TodoProvider              | Task planning and tracking (`/todos` command)             |
+| AgentModeProvider         | Mode switching (`/mode` command)                          |
+| FileMemoryProvider        | Persistent memory stored as files                         |
+| FileAccessProvider        | Read/write files in a working directory                   |
+| ToolApproval              | Don't-ask-again approval for sensitive tools              |
+| WebSearch                 | Built-in hosted web search                                |
+| AgentSkillsProvider       | Discovers and uses skills from the `skills/` folder       |
+| HyperlightCodeActProvider | Sandboxed Python execution via `execute_code`             |
+| OpenTelemetry             | Trace logging to a text file                              |
