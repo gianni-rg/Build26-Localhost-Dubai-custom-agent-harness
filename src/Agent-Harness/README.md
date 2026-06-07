@@ -22,7 +22,7 @@ These are based on sample from the Microsoft Agent Framework repo here:
 
 For `Harness_Step04_CodeExecution`:
 
-- A host that supports Hyperlight execution requirements for sandboxed code execution
+- A host that supports Hyperlight execution requirements for sandboxed code execution. See [docs/HYPERLIGHT_SETUP.md](../../docs/HYPERLIGHT_SETUP.md) for details.
 
 ## Configure Environment Variables
 
@@ -42,11 +42,6 @@ Bash:
 
 ```bash
 export AZURE_AI_PROJECT_ENDPOINT="https://<your-project>.services.ai.azure.com/api/projects/<your-project-name>"
-export AZURE_AI_MODEL_DEPLOYMENT_NAME="gpt-5.4"
-```
-
-```bash
-export AZURE_AI_PROJECT_ENDPOINT="https://mvp-openai-swc.services.ai.azure.com/api/projects/dev-test"
 export AZURE_AI_MODEL_DEPLOYMENT_NAME="gpt-5.4"
 ```
 
