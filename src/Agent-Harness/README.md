@@ -2,8 +2,8 @@
 
 Samples demonstrating the [Harness AIContextProviders](../../../src/Microsoft.Agents.AI/Harness/) — reusable providers that add planning, task management, and mode tracking to any `ChatClientAgent`.
 
-These are based on sample from the Microsoft Agent Framework repo here: 
-https://github.com/microsoft/agent-framework/
+These are based on sample from the Microsoft Agent Framework repo here:
+<https://github.com/microsoft/agent-framework/>
 
 ## Samples
 
@@ -45,24 +45,29 @@ export AZURE_AI_PROJECT_ENDPOINT="https://<your-project>.services.ai.azure.com/a
 export AZURE_AI_MODEL_DEPLOYMENT_NAME="gpt-5.4"
 ```
 
+```bash
+export AZURE_AI_PROJECT_ENDPOINT="https://mvp-openai-swc.services.ai.azure.com/api/projects/dev-test"
+export AZURE_AI_MODEL_DEPLOYMENT_NAME="gpt-5.4"
+```
+
 ## Build All Samples
 
 From repo root:
 
 ```powershell
 $projects = @(
-	".\\src\\Agent-Harness\\ConsoleReactiveFramework\\ConsoleReactiveFramework.csproj",
-	".\\src\\Agent-Harness\\ConsoleReactiveComponents\\ConsoleReactiveComponents.csproj",
-	".\\src\\Agent-Harness\\Harness_Shared_Console\\Harness_Shared_Console.csproj",
-	".\\src\\Agent-Harness\\Harness_Shared_Console_OpenAI\\Harness_Shared_Console_OpenAI.csproj",
-	".\\src\\Agent-Harness\\Harness_Step01_Research\\Harness_Step01_Research.csproj",
-	".\\src\\Agent-Harness\\Harness_Step02_Research_WithBackgroundAgents\\Harness_Step02_Research_WithBackgroundAgents.csproj",
-	".\\src\\Agent-Harness\\Harness_Step03_DataProcessing\\Harness_Step03_DataProcessing.csproj",
-	".\\src\\Agent-Harness\\Harness_Step04_CodeExecution\\Harness_Step04_CodeExecution.csproj"
+ ".\\src\\Agent-Harness\\ConsoleReactiveFramework\\ConsoleReactiveFramework.csproj",
+ ".\\src\\Agent-Harness\\ConsoleReactiveComponents\\ConsoleReactiveComponents.csproj",
+ ".\\src\\Agent-Harness\\Harness_Shared_Console\\Harness_Shared_Console.csproj",
+ ".\\src\\Agent-Harness\\Harness_Shared_Console_OpenAI\\Harness_Shared_Console_OpenAI.csproj",
+ ".\\src\\Agent-Harness\\Harness_Step01_Research\\Harness_Step01_Research.csproj",
+ ".\\src\\Agent-Harness\\Harness_Step02_Research_WithBackgroundAgents\\Harness_Step02_Research_WithBackgroundAgents.csproj",
+ ".\\src\\Agent-Harness\\Harness_Step03_DataProcessing\\Harness_Step03_DataProcessing.csproj",
+ ".\\src\\Agent-Harness\\Harness_Step04_CodeExecution\\Harness_Step04_CodeExecution.csproj"
 )
 
 foreach ($p in $projects) {
-	dotnet build $p -nologo
+ dotnet build $p -nologo
 }
 ```
 
