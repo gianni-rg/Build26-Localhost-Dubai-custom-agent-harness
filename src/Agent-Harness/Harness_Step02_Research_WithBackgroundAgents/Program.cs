@@ -26,9 +26,16 @@ var deploymentName = Environment.GetEnvironmentVariable("AZURE_AI_MODEL_DEPLOYME
 const int MaxContextWindowTokens = 1_050_000;
 const int MaxOutputTokens = 128_000;
 const string TracingSourceName = "Harness.SubAgents";
+var otlpEndpoint =
+    Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT") ??
+    Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_TRACES_ENDPOINT") ??
+    "http://localhost:4317";
 
-// Set up OpenTelemetry tracing that writes spans to a text file.
-using var tracerProvider = HarnessTracing.CreateFileTracerProvider(TracingSourceName);
+// Set up OpenTelemetry tracing that writes spans to a text file AND exports to OTLP endpoint.
+// The OTLP exporter sends traces to your OpenTelemetry collector (e.g., otelme in VSCode).
+using var tracerProvider = HarnessTracing.CreateFileTracerProvider(
+    TracingSourceName,
+    otlpEndpoint: otlpEndpoint);
 
 // Create the AIProjectClient for communicating with the Foundry responses service.
 var projectClient = new AIProjectClient(

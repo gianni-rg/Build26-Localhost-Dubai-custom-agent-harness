@@ -31,11 +31,17 @@ var deploymentName = Environment.GetEnvironmentVariable("AZURE_AI_MODEL_DEPLOYME
 const int MaxContextWindowTokens = 1_050_000;
 const int MaxOutputTokens = 128_000;
 const string TracingSourceName = "Harness.Research";
+var otlpEndpoint =
+    Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT") ??
+    Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_TRACES_ENDPOINT") ??
+    "http://localhost:4317";
 
-// Set up OpenTelemetry tracing that writes spans to a text file.
+// Set up OpenTelemetry tracing that writes spans to a text file AND exports to OTLP endpoint.
 // This captures all agent activity (tool calls, model invocations, compaction, etc.)
 // as well as HTTP requests made by the underlying HttpClient transport.
-using var tracerProvider = HarnessTracing.CreateFileTracerProvider(TracingSourceName);
+using var tracerProvider = HarnessTracing.CreateFileTracerProvider(
+    TracingSourceName,
+    otlpEndpoint: otlpEndpoint);
 
 // Create a HarnessAgent with the Harness providers (TodoProvider and AgentModeProvider)
 // and research-focused instructions including the mandatory planning workflow.
