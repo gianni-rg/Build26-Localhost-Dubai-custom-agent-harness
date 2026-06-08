@@ -35,6 +35,14 @@ systeminfo | Select-String -Pattern "Hyper-V|Virtualization"
 
 All Hyper-V requirements should report **Yes**. If any item shows **No**, virtualization is likely disabled in BIOS/UEFI. Enable it before proceeding.
 
+If the command returns this instead, it means the Windows hypervisor is already running and `systeminfo` is hiding the detailed requirement table:
+
+```text
+Hyper-V Requirements:          A hypervisor has been detected. Features required for Hyper-V will not be displayed.
+```
+
+For scripts, treat an already-running hypervisor as success. Some CIM CPU capability fields can also be unavailable or inaccurate after the hypervisor is active, so use them as hints rather than hard blockers.
+
 ### Enable Windows Hypervisor Platform (Automated)
 
 Run the following from an **elevated PowerShell** prompt.
@@ -64,13 +72,28 @@ Save this as `setup-hyperlight-prereqs.ps1` and run as Administrator:
 
 Write-Host "=== Hyperlight Prerequisites Setup ===" -ForegroundColor Cyan
 
-# 1. Check virtualization is enabled in BIOS
-$sys = systeminfo
-if ($sys -notmatch "Hyper-V Requirements.*Yes") {
-    Write-Error "Virtualization not enabled in BIOS/UEFI. Please enable Intel VT/AMD-V and reboot."
-    exit 1
+# 1. Check virtualization support. systeminfo and some CIM CPU fields can hide or misreport
+#    details when a hypervisor is already running.
+$computer = Get-CimInstance -ClassName Win32_ComputerSystem
+$processors = Get-CimInstance -ClassName Win32_Processor
+
+if ($computer.HypervisorPresent) {
+    Write-Host "[OK] A Windows hypervisor is already running." -ForegroundColor Green
+} else {
+    $virtualizationEnabled = $processors | Where-Object { $_.VirtualizationFirmwareEnabled }
+    $slatSupported = $processors | Where-Object { $_.SecondLevelAddressTranslationExtensions }
+
+    if (-not $virtualizationEnabled) {
+        Write-Error "Virtualization not enabled in BIOS/UEFI. Please enable Intel VT/AMD-V and reboot."
+        exit 1
+    }
+
+    if (-not $slatSupported) {
+        Write-Warning "CPU does not report SLAT support. Continuing because this value can be unavailable or inaccurate on some systems."
+    }
+
+    Write-Host "[OK] Virtualization is enabled in BIOS." -ForegroundColor Green
 }
-Write-Host "[OK] Virtualization is enabled in BIOS." -ForegroundColor Green
 
 # 2. Enable required Windows features using DISM (more reliable than Enable-WindowsOptionalFeature)
 $features = @("HypervisorPlatform", "VirtualMachinePlatform")
