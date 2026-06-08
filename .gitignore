@@ -45,3 +45,7 @@ src/Agent-Harness/Harness_Step01_Research/bin/
 src/Agent-Harness/Harness_Step03_DataProcessing/bin/
 src/Agent-Harness/Harness_Step04_CodeExecution/bin/
 src/Agent-Harness/Harness_Step02_Research_WithBackgroundAgents/bin/
+
+CMDs.txt
+slides/*
+docs/*
